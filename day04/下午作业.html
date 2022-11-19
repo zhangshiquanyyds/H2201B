@@ -134,10 +134,23 @@
         console.log(res);
     }).catch(err => {
         console.log(err);
-    }).finally(()=>{
+    }).finally(() => {
         console.log(111);
     })
 
+
+    // 封装pormise   js
+    const p = new Promise((resolve, reject) => {
+        fs.readFile('./为学.md', function (err, data) {
+            if (err) return console.log('读取文件失败：' + err.message)
+            console.log('读取文件成功，内容是' + data)
+        })
+    })
+    p.then(function(value){
+        console.log(value.toString());
+    },function(reaon){
+        console.log('读取失败');
+    })
 </script>
 
 </html>
