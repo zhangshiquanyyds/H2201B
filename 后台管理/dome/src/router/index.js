@@ -48,6 +48,28 @@ const routes = [{
         component: () => import('../views/添加商品/Commodity.vue'),
       },
       //添加数据
+      {
+        path: '/distribution',
+        name: 'distribution',
+        component: () => import('../views/图表/Distribution'),
+      },
+      {
+        path: '/edit',
+        name: 'edit',
+        component: () => import('../views/编辑/Edit'),
+      },
+      {
+        path: '/admin',
+        name: 'admin',
+        component: () => import('../views/设置/Admin'),
+      },
+      {
+        path: '/explain',
+        name: 'explain',
+        component: () => import('../views/说明/Explain'),
+      },
+
+
     ]
   }
 ]
