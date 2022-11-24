@@ -1,0 +1,21 @@
+const p1=new Promise((resolve, reject) => {
+    setTimeout(()=>{
+        resolve(1111)
+    },300)
+})
+const p2=new Promise((resolve, reject) => {
+    setTimeout(()=>{
+        resolve(2222)
+    },300)
+})
+const p3=new Promise((resolve, reject) => {
+    setTimeout(()=>{
+        resolve(3333)
+    },300)
+})
+Promise.race([[p1,p2,p3]]).then((res)=>{
+    console.log('res'.res);
+})
+.catch((err)=>{
+    console.log('err',err);
+})

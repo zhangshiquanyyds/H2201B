@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // const map=new Map([
+    //     ['name','张珊']
+    //     ['title','adad']
+    // ])
+    // console.log(map.size);
+    // map.has('name')
+    // map.get('name')
+    // map.has('title')
+    // map.get('title')
+
+    // 声明一个map函数
+    const map=new Map()
+    console.log(map);
+    map.set('name','小红')
+    map.set('change',function(){
+        console.log('我想月入2万');
+    })
+    let key={
+        school:'soloe'
+    }
+    map.set(key,['韩信','李白','王昭君'])
+    console.log(map);
+    map.delete('name')//删除
+    console.log(map);
+    //判断
+    console.log(map.has('change'));
+    console.log(map.has('keys'));
+    // 获取
+    console.log(map.get('change'));
+    console.log(map.get(key));
+    console.log(map.size);
+    for(let key of map){
+        console.log(key);
+    }
+    
+</script>
+</html>

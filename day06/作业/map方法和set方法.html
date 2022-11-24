@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // map
+    let map = new Map()
+    map.set('uname', '韩信')
+    map.set('price', '888')
+    map.set('title', '长枪一动白龙吟')
+    console.log(map);
+    map.delete('price') //删除
+    map.has('uname') //判断
+    map.get('price') //获取
+    console.log(map.size);//长度
+    for (let key of map) {
+        console.log(key);
+    } //循环
+
+    // set
+    let set = new Set()
+    set.add('name', '王昭君')
+    set.add('price', '1688')
+    set.add('title', '冻死你')
+    console.log(set);
+    set.delete('price')
+    console.log(set);
+    set.has('name')
+    for(let key of set){
+        console.log(key);
+    }
+    //set对象转数组
+    let newset=[...set]
+    let set1=Array.from(set)
+    console.log(set1);
+    
+    let arr=[1,2,3,4,5,6,76,4,3,2,1]
+    console.log(new Set(arr));//去重
+</script>
+
+</html>
