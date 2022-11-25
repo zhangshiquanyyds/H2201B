@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 原生继承
+    //  function Poone(brand, price) {
+    //     this.brand = brand
+    //     this.price = price
+    // }
+    // Poone.prototype.call = function () {
+    //     console.log('我是可以打电话');
+    // }
+    // function SmartePhone(brand,price,color,size){
+    //     Poone.call(this,brand,price)
+    //     this. color= color
+    //     this.size = size
+    // }
+
+    // SmartePhone.prototype=new Poone
+    // SmartePhone.prototype.constructor=SmartePhone
+    // SmartePhone.prototype.phoot=function (){
+    //     console.log('我可以打游戏');
+    // }
+    // SmartePhone.prototype.playon=function (){
+    //     console.log('我可以王者');
+    // }
+    // let s=new SmartePhone('吃鸡','王者','red','3')
+    // console.log(s);
+
+    // extends以及super继承
+    function Poone(brand, price) {
+        this.brand = brand
+        this.price = price
+    }
+    Poone.prototype.call = function () {
+        console.log('我是可以打电话');
+    }
+
+    class SmartePhone extends Poone {
+        constructor(brand, price, color, size) {
+            super(brand, price) //  Poone.call(this,brand,price)
+            this.color = color
+            this.size = size
+        }
+        yx1(){
+            console.log('王昭君');
+        }
+        yx2(){
+            console.log('韩信');
+        }
+        call(){
+            console.log('李白');
+        }
+    }
+    const bobo=new SmartePhone('安琪拉','888','红色','1688')
+    console.log(bobo);
+    bobo.call()
+    bobo.yx2()
+</script>
+
+</html>
