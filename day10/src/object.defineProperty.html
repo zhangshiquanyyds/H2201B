@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+</body>
+<script>
+    // let vm = new Vue({
+    //     data() {
+    //         return {
+
+    //         }
+    //     },
+    // })
+    // vm.mounted('#app')
+
+    let hp = '我想刀你'
+    let peron = {
+        name: "王斌晶",
+        age: '30',
+        sex: '女'
+    }
+    Object.defineProperty(peron, 'hp', {
+        value: hp,
+        enumerable:true,//枚举的属性可以循环出来
+        writable:true,//设置可以修改
+        configurable:true,//可以删除
+        // get: function () {
+        //     console.log('有人读取了hp');
+        //     return hp
+        // },
+        // set(value) {
+        //     console.log(value, '有人设置了值');
+        //     hp = value
+        // }
+
+    })
+</script>
+
+</html>

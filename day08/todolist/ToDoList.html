@@ -27,11 +27,19 @@
 
         </ul>
         <div id="bottom-title">
+             <svg class="svg-inline--fa fa-clipboard-check fa-w-12 icon" aria-hidden="true" focusable="false"          
+                              data-prefix="fas" data-icon="clipboard-check" role="img"
+                xmlns="http://www.w3.org/2000/svg"                         viewBox="0 0 384 512" data-v-132cabf7="">
+                                        <path class="" fill="currentColor"                            
+                    d="M336 64h-80c0-35.3-28.7-64-64-64s-64 28.7-64 64H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM192 40c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24zm121.2 231.8l-143 141.8c-4.7 4.7-12.3 4.6-17-.1l-82.6-83.3c-4.7-4.7-4.6-12.3.1-17L99.1 285c4.7-4.7 12.3-4.6 17 .1l46 46.4 106-105.2c4.7-4.7 12.3-4.6 17 .1l28.2 28.4c4.7 4.8 4.6 12.3-.1 17z">
+                                            </path>
+                                    </svg>
+
             <span>Congrat, you have no more tasks to do</span>
         </div>
         <div id="bottom">
             <span style="font-size: 12px;" id="bottom-span">item left</span>
-            <div id="bottom-btn">
+            <div id="bottom-btn" class="bom">
                 <button class="btn" id="btn1">All</button>
                 <button id="btn2">Active</button>
                 <button id="btn3">Completed</button>
@@ -52,6 +60,7 @@
     document.addEventListener('keyup', function listadd(e) {
         var list1 = document.getElementById('list1')
         if (e.keyCode == 13) {
+            if (e.target.value == '') return
             //创建li标签
             var li = document.createElement('li')
             //给li标签赐值
@@ -64,31 +73,28 @@
             list1.appendChild(li)
             inp.value = ''
             getlist()
-
         }
     })
     //点击添加
     var add = document.getElementById('add')
     var inp = document.getElementById('inp')
     add.onclick = function () {
-        if (inp.value == '') {
-            alert('内容不能为空')
-        } else {
-            //创建li标签
-            var li = document.createElement('li')
-            //给li标签赐值
-            li.innerHTML = `
+        if (inp.value == '') return
+        //创建li标签
+        var li = document.createElement('li')
+        //给li标签赐值
+        li.innerHTML = `
             <div>
                     <input type="checkbox" name="" class='ck'>
                     <span>${inp.value}</span>
                 </div><span class='del'>X</span>`
 
-            //末尾添加
-            list1.appendChild(li)
-            inp.value = ''
+        //末尾添加
+        list1.appendChild(li)
+        inp.value = ''
 
-            getlist()
-        }
+        getlist()
+
 
     }
     //事件委托
@@ -135,13 +141,54 @@
             btns.children[i].className = ''
         }
         e.target.className = 'btn'
+        if (e.target.innerText == 'All') {
+            for (let i = 0; i < list1.children.length; i++) {
+                list1.children[i].style.display = ''
+            }
+        }
+        if (e.target.innerText == 'Active') {
+            for (let i = 0; i < list1.children.length; i++) {
+                if (list1.children[i].className == 'active') {
+                    list1.children[i].style.display = 'none'
+                } else {
+                    list1.children[i].style.display = ''
+                }
+            }
+        }
+        if (e.target.innerText == 'Completed') {
+            for (let i = 0; i < list1.children.length; i++) {
+                if (list1.children[i].className != 'active') {
+                    list1.children[i].style.display = 'none'
+                } else {
+                    list1.children[i].style.display = ''
+                }
+            }
+        }
+        if (e.target.innerText == 'Clar Completed') {
+            for (let i = 0; i < list1.children.length; i++) {
+                if (list1.children[i].className == 'active') {
+                    list1.children[i].remove()
+                }
+            }
+        }
+    }
+    let bton=document.querySelectorAll('button')
+    console.log(bton);
+    bton.onmouseover = function() {
+        console.log(111);
     }
 </script>
 <style>
+    @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700,300);
+
+    * {
+        font-family: "Yanone Kaffeesatz", sans-serif !important;
+    }
+
     body {
         width: 100%;
         height: 100%;
-        background: #ffb7b3;
+        background-image: linear-gradient(90deg, #ffafbd, #ffc3a0);
     }
 
     .todo {
@@ -167,29 +214,30 @@
     }
 
     .headers .title {
+        box-sizing: border-box;
         background: #fe7345;
         color: #fff;
-        width: 60px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
         line-height: 30px;
         margin: auto 0;
         padding: 5.25px 16.8px 3.15px;
         border-radius: 20% 5% 20% 5%/5% 20% 25% 20%;
         transform: rotate(3deg);
+        font-size: 21px;
         /*倾斜*/
-        /* font-weight: lighter; */
 
     }
 
     .ig {
-        width: 80px;
-        height: 80px;
+        width: 100%;
+        height: 100%;
     }
 
     h1 {
         text-align: center;
-        font-size: 18px;
-        margin: 20px 0 18px;
+        font-size: 24px;
+        margin: 27px 0 18px;
     }
 
     .inputs {
@@ -212,13 +260,25 @@
     .inputs .span1 {
         position: relative;
         display: inline-block;
-        width: 71px;
-        height: 40px;
+        width: 70px;
+        height: 37px;
         background: #000;
-        transform: rotate(4deg);
+        transform: rotate(5deg);
         border-radius: 5px;
         background: #fe7345;
         background-image: url(data:image/png;base64,R0lGODlhBAAEAIABAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjEgNjQuMTQwOTQ5LCAyMDEwLzEyLzA3LTEwOjU3OjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1LjEgV2luZG93cyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5NUY1OENCRDdDMDYxMUUyOTEzMEE1MEM5QzM0NDVBMyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5NUY1OENCRTdDMDYxMUUyOTEzMEE1MEM5QzM0NDVBMyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjk1RjU4Q0JCN0MwNjExRTI5MTMwQTUwQzlDMzQ0NUEzIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjk1RjU4Q0JDN0MwNjExRTI5MTMwQTUwQzlDMzQ0NUEzIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAAAQAsAAAAAAQABAAAAgYEEpdoeQUAOw==);
+    }
+
+    @keyframes addbtn {
+        0% {
+            transform: rotate(3deg);
+        }
+    }
+
+    .inputs .span1:active {
+        animation: addbtn 0.1;
+        height: 30px;
+        transform: rotate(0deg);
     }
 
     .inputs .span2 {
@@ -226,13 +286,12 @@
         top: 0;
         left: 0;
         display: inline-block;
-        width: 69px;
+        width: 67px;
         height: 30px;
         text-align: center;
         line-height: 35px;
         font-size: 16.5px;
         background: #fff;
-
         border-radius: 5px;
         border: 2px solid #494a4b;
     }
@@ -245,16 +304,19 @@
     #bottom-title span {
         font-size: 13px;
         color: #a9a6a7;
-        margin-left: 40px;
     }
 
     ul {
+        padding: 0;
         margin-bottom: 60px;
     }
 
     li {
         display: flex;
         justify-content: space-between;
+        border-radius: 4px;
+        padding: 8px 10px 8px 0;
+        margin-top: 10px;
     }
 
     .active {
@@ -263,24 +325,36 @@
         color: #fff;
     }
 
+
+
     button {
         border: 0;
         background: #fff;
         height: 20px;
+        padding: 0 10px;
     }
 
     #bottom-span {
-       float: left;
-       margin-top: 5px;
-       margin-right: 5px;
+        float: left;
+        margin-top: 5px;
+        margin-right: 5px;
     }
-    #bottom-btn{
+
+    #bottom-btn {
         float: right;
     }
+
     .btn {
         background: #fe7345;
         color: #fff;
         border-radius: 4px;
+    }
+
+    .icon {
+        width: 12px;
+        height: 16px;
+        color: #acaec6;
+        margin: 0 5px 0 70px;
     }
 </style>
 
