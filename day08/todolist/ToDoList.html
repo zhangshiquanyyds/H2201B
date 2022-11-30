@@ -15,7 +15,7 @@
             <div>
                 <img src="./img/note.75134fb0.svg" alt="" class="ig">
             </div>
-            <div class="title">To-DolIST</div>
+            <div class="title">To-Do List</div>
             <div></div>
         </div>
         <h1>~ Today I need to ~</h1>
@@ -40,10 +40,7 @@
         <div id="bottom">
             <span style="font-size: 12px;" id="bottom-span">item left</span>
             <div id="bottom-btn" class="bom">
-                <button class="btn" id="btn1">All</button>
-                <button id="btn2">Active</button>
-                <button id="btn3">Completed</button>
-                <button id="btn4">Clar Completed</button>
+
             </div>
         </div>
     </div>
@@ -55,7 +52,9 @@
 
     // function getlist() {
     //     JSON.parse(localStorage.getItem('list'))
-    // }
+    // } 
+    //复选框
+    var inpck;
     //回车添加
     document.addEventListener('keyup', function listadd(e) {
         var list1 = document.getElementById('list1')
@@ -72,6 +71,7 @@
             //末尾添加
             list1.appendChild(li)
             inp.value = ''
+            inpck = document.querySelectorAll('.ck') //获取复选框
             getlist()
         }
     })
@@ -92,9 +92,7 @@
         //末尾添加
         list1.appendChild(li)
         inp.value = ''
-
         getlist()
-
 
     }
     //事件委托
@@ -102,9 +100,11 @@
     ul.oninput = function (e) {
         if (e.target.parentNode.parentNode.className == 'active') {
             e.target.parentNode.parentNode.className = ''
+
         } else {
             e.target.parentNode.parentNode.className = 'active'
         }
+        getlist()
     }
     // 删除
     ul.onclick = function (e) {
@@ -114,8 +114,10 @@
         getlist()
     }
     var lis;
+    var bom = document.querySelector('.bom')
 
     function getlist() {
+        bom.innerHTML = ''
         lis = document.querySelectorAll('li')
         // 获取底部两个dome节点
         var title = document.getElementById('bottom-title')
@@ -127,14 +129,64 @@
             bottom.style.display = 'none'
             title.style.display = 'block'
         }
-        //计算有多少条数据
+        // //计算有多少条数据
+        let num = 0;
+
+        lis.forEach(item => {
+            if (item.className == '') {
+                num++
+            }
+        });
         var span = document.getElementById('bottom-span')
-        span.innerHTML = `${lis.length} item left`
+        span.innerHTML = `${num} item left`
+
+        var button = document.createElement('button')
+
+        if (num == lis.length) {
+            bom.innerHTML = `
+                <button id="btn2"></button>
+                <button id="btn3"></button>
+                <button id="btn4"></button>
+                <button class="btn" id="btn1">All</button>`
+        }
+        if (num != 0 && num != lis.length) {
+            bom.innerHTML = `
+            <button class="btn" id="btn1">All</button>
+                <button id="btn2">Active</button>
+                <button id="btn3">Completed</button>
+                <button id="btn4">Clar Completed</button>`
+        }
+        if (num == 0 && lis.length != 0) {
+            bom.innerHTML = `
+            <button class="btn" id="btn1">All</button>
+                <button id="btn2"></button>
+                <button id="btn3"></button>
+                <button id="btn4">Clar Completed</button>`
+        }
+
+        if (list1.children.length == 0) {
+            bottom.style.display = 'none'
+            title.style.display = 'block'
+        } else {
+            bottom.style.display = 'block'
+            title.style.display = 'none'
+        }
+
 
     }
     getlist()
 
+
     var btns = document.getElementById('bottom-btn')
+    for (let i = 0; i < btns.children.length; i++) {
+        console.log(111);
+        btns.children[i].mouseover = function () {
+            console.log(111);
+        }
+        btns.children[i].mouseleave = function () {
+            console.log(111);
+        }
+    }
     btns.onclick = function (e) {
         //排他
         for (let i = 0; i < btns.children.length; i++) {
@@ -165,17 +217,14 @@
             }
         }
         if (e.target.innerText == 'Clar Completed') {
-            for (let i = 0; i < list1.children.length; i++) {
+            for (let i = 0; i <= list1.children.length; i++) {
                 if (list1.children[i].className == 'active') {
                     list1.children[i].remove()
+                    i = i - 1
                 }
+                getlist()
             }
         }
-    }
-    let bton=document.querySelectorAll('button')
-    console.log(bton);
-    bton.onmouseover = function() {
-        console.log(111);
     }
 </script>
 <style>
