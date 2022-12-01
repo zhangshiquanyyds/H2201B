@@ -64,8 +64,9 @@
             var li = document.createElement('li')
             //给li标签赐值
             li.innerHTML = `
-            <div>
-                    <input type="checkbox" name="" class='ck'>
+            <div><span>
+                <input type="checkbox" name="" class='ck'>
+                </span>
                     <span>${inp.value}</span>
                 </div><span  class='del'>X</span>`
             //末尾添加
@@ -78,33 +79,52 @@
     //点击添加
     var add = document.getElementById('add')
     var inp = document.getElementById('inp')
+    var go
     add.onclick = function () {
         if (inp.value == '') return
         //创建li标签
         var li = document.createElement('li')
         //给li标签赐值
         li.innerHTML = `
-            <div>
-                    <input type="checkbox" name="" class='ck'>
+            <div><span>
+                <input type="checkbox" name="" class='ck'>
+                </span>
+                    
                     <span>${inp.value}</span>
                 </div><span class='del'>X</span>`
 
         //末尾添加
         list1.appendChild(li)
         inp.value = ''
+        go = document.querySelectorAll('.go')
         getlist()
 
     }
     //事件委托
     var ul = document.querySelector('ul')
+    var go
     ul.oninput = function (e) {
-        if (e.target.parentNode.parentNode.className == 'active') {
-            e.target.parentNode.parentNode.className = ''
+        if (e.target.parentNode.parentNode.parentNode.className == 'active') {
 
         } else {
-            e.target.parentNode.parentNode.className = 'active'
+            e.target.parentNode.parentNode.parentNode.className = 'active'
+            e.target.parentNode.parentNode.children[1].style.textDecoration = 'line-through'
+            e.target.parentNode.innerHTML = `<span class="go">√</span>`
+           go = document.querySelectorAll('.go')
+           goqh()
         }
         getlist()
+    }
+
+    function goqh() {
+        for (let index = 0; index < go.length; index++) {
+            go[index].onclick = function (e) {
+                e.target.parentNode.parentNode.parentNode.className = ''
+                e.target.parentNode.parentNode.children[1].style.textDecoration = ''
+                e.target.parentNode.innerHTML = ` <input type="checkbox" class="ck">`
+            }
+
+        }
     }
     // 删除
     ul.onclick = function (e) {
@@ -144,9 +164,9 @@
 
         if (num == lis.length) {
             bom.innerHTML = `
-                <button id="btn2"></button>
-                <button id="btn3"></button>
-                <button id="btn4"></button>
+                <button></button>
+                <button></button>
+                <button></button>
                 <button class="btn" id="btn1">All</button>`
         }
         if (num != 0 && num != lis.length) {
@@ -159,8 +179,8 @@
         if (num == 0 && lis.length != 0) {
             bom.innerHTML = `
             <button class="btn" id="btn1">All</button>
-                <button id="btn2"></button>
-                <button id="btn3"></button>
+                <button></button>
+                <button></button>
                 <button id="btn4">Clar Completed</button>`
         }
 
@@ -176,17 +196,6 @@
     }
     getlist()
 
-
-    var btns = document.getElementById('bottom-btn')
-    for (let i = 0; i < btns.children.length; i++) {
-        console.log(111);
-        btns.children[i].mouseover = function () {
-            console.log(111);
-        }
-        btns.children[i].mouseleave = function () {
-            console.log(111);
-        }
-    }
     btns.onclick = function (e) {
         //排他
         for (let i = 0; i < btns.children.length; i++) {
@@ -370,11 +379,38 @@
 
     .active {
         background: orange;
-        text-decoration: line-through;
+        
         color: #fff;
+        animation-duration: 0.5s;
+        /* 动画完成的时间 */
+        animation-timing-function: ease-in-out;
+        /* 动画运行的轨迹 */
+        animation-delay: 0s;
+        /* 延迟动画时间 */
+        animation-iteration-count: 1;
+        /* 动画播放的速度 */
+        animation-direction: normal;
+        /* 是否反方向运动 */
+        animation-fill-mode: both;
+        /* 规定动画在播放之前或之后，其动画效果是否可见  both 向前和向后填充模式都被应用 */
+        animation-play-state: running;
+        /* 暂停动画   running 指定正在运行的动画  paused 指定暂停动画 */
+        animation-name: fadenum;
+        /* 制定动画规则的名字 */
     }
 
+    /* 制定动画运行规则 */
+    @keyframes fadenum {
+        0% {
+            -webkit-transform: rotateX(270deg);
+            transform: rotateX(270deg);
+        }
 
+        100% {
+            -webkit-transform: rotateX(360deg);
+            transform: rotateX(360deg);
+        }
+    }
 
     button {
         border: 0;
@@ -404,6 +440,30 @@
         height: 16px;
         color: #acaec6;
         margin: 0 5px 0 70px;
+    }
+
+    #btn1:hover {
+        background: #fe7345;
+        color: #fff;
+        border-radius: 4px;
+    }
+
+    #btn2:hover {
+        background: #fe7345;
+        color: #fff;
+        border-radius: 4px;
+    }
+
+    #btn3:hover {
+        background: #fe7345;
+        color: #fff;
+        border-radius: 4px;
+    }
+
+    #btn4:hover {
+        background: #fe7345;
+        color: #fff;
+        border-radius: 4px;
     }
 </style>
 
