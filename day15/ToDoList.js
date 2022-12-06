@@ -58,7 +58,7 @@ var list = [{
     sex: 0,
     checked: false
 }, {
-    id: 11,
+    id: 31,
     name: "刘艺",
     sex: 1,
     checked: false
@@ -100,7 +100,7 @@ var list = [{
 }, {
     id: 19,
     name: "吴倩",
-    sex: 0,
+    sex: 1,
     checked: false
 }, {
     id: 20,
@@ -155,15 +155,15 @@ var list = [{
 }, {
     id: 30,
     name: "周璇",
-    sex: 0,
+    sex: 1,
     checked: false
 }, ]
 
 let timedate = document.querySelector('.Time') //获取时间节点
 var ul = document.querySelector('.ul') //获取ul节点
-var button = document.querySelectorAll('button')//获取底部按钮
-var adio = document.querySelector('.adio')//获取播放器节点
-var con=document.querySelector('.con')//获取天选之人节点
+var button = document.querySelectorAll('button') //获取底部按钮
+var adio = document.querySelector('.adio') //获取播放器节点
+var con = document.querySelector('.con') //获取天选之人节点
 timedate.innerHTML = '时间:' + ' ' + dayjs(`${new Date()}`).format('YYYY-MM-DD HH:mm:ss')
 setInterval(() => {
     //定时一秒执行一次获取当前时间并进行赋值
@@ -175,46 +175,93 @@ for (let i = 0; i < list.length; i++) {
     li.innerHTML = `<span>${list[i].name}</span>`
     ul.appendChild(li)
 }
-var num; //随机数
+var num = [] //随机数
 var time;
+var All = [] //存放双人点名的成员
 // 给每一个按钮绑定点击事件
 for (let i = 0; i < button.length; i++) {
     button[i].onclick = function (e) {
         if (e.target.innerHTML != '停止') {
-            e.target.innerHTML = '停止'
+
             // 播放音频
             // adio.play()
             //重新加载src指定的资源
             adio.load()
-            
-            time = setInterval(() => {
-                num = Math.ceil(Math.random() * 31)
+            if (e.target.innerHTML == '单人点名') {
+                getnum() //调用随机点名器
+            }
+            if (e.target.innerHTML == '双人点名') {
+                time = setInterval(() => {
+                    num[0] = Math.ceil(Math.random() * 31)
+                    num[1] = Math.ceil(Math.random() * 31)
+                }, 1000)
                 console.log(num);
-            }, 1000)
+            }
+            if (e.target.innerHTML == '男生点名') {
+                //调用随机点名器
+                getnum()
+            }
+            if (e.target.innerHTML == '女生点名') {
+                //调用随机点名器
+                getnum()
+            }
+            e.target.innerHTML = '停止'
 
         } else {
             //暂停音频
             adio.pause()
-            clearTimeout(time)//清除定时器
+            clearTimeout(time) //清除定时器
             // 循环判断id相等就赋值
-            for(let i=0;i<list.length;i++){
-                if(list[i].id==num){
-                    con.innerHTML=list[i].name
-                }
-            }
             if (i == 0) {
                 e.target.innerHTML = '单人点名'
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].id == num) {
+                        con.innerHTML = list[i].name
+                    }
+                }
             }
             if (i == 1) {
                 e.target.innerHTML = '双人点名'
+                All = [] //每次双人点名让数组置空
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].id == num[0] || list[i].id == num[1]) {
+                        All.push(list[i].name)
+                    }
+                }
+                con.innerHTML = All[0] + ',' + All[1]
             }
             if (i == 2) {
                 e.target.innerHTML = '男生点名'
+                let boy = list.filter(i => i.sex == 0)
+                boy.forEach(item => {
+                    if (item.id == num) {
+                        con.innerHTML = item.name
+                    }
+                });
+
             }
             if (i == 3) {
                 e.target.innerHTML = '女生点名'
+                var girl = []
+                //筛选女生
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].sex == 1) {
+                        girl.push(list[i])
+                    }
+                }
+                for (let i = 0; i < girl.length; i++) {
+                    if (girl[i].id == num) {
+                        console.log(girl[i].name);
+                        con.innerHTML = girl[i].name
+                    }
+                }
             }
         }
 
     }
+}
+//随机点名器
+function getnum() {
+    num = Math.ceil(Math.random() * 31)
+    console.log(num);
 }
